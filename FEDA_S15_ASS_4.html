@@ -1,0 +1,38 @@
+<!-- Write a directive to demonstrate method binding of parent scope method in isolated scopes -->
+
+<html ng-app="myApp">
+	<head>
+		<title>AngularJS Custom Directives</title>
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+		<script type="text/javascript">
+			var module = angular.module("myApp", []);
+			
+			module.controller("newCtrl", function($scope){
+				$scope.name = 'OM PRAKASH';
+				$scope.getName = function(){
+					alert('Hi, ' + $scope.name);
+				}
+			});
+			
+			module.directive('myDir', function(){
+				return {
+					restrict: 'EA',
+					template: '<input type="text" ng-model="childName"/><button ng-click="btnName()">Submit</button><br/>',
+					scope: {
+						childName: '=',
+						btnName: '&'
+					}
+				}
+			});
+		</script>
+	</head>
+	<body>
+		<div ng-controller="newCtrl">
+				
+			<my-dir child-name="name" btn-name="getName()">
+				
+			</my-dir>
+				Hello, {{name}}
+		</div>
+	</body>
+</html>
